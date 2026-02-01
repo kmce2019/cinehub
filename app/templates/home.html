@@ -5,8 +5,8 @@
     <section class="row-section">
       <h2 class="row-title">{{ row.title }}</h2>
       <div class="poster-row">
-        {% for item in row.items %}
-          {% if row.kind == 'jellyfin' %}
+        {% for item in row["items"] %}
+          {% if row["kind"] == 'jellyfin' %}
             {% set item_id = item.get('Id') %}
             {% set title = item.get('Name') %}
             {% set image_tag = item.get('ImageTags', {}).get('Primary') %}
