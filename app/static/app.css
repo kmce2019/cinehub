@@ -1,0 +1,106 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #111;
+  color: #eee;
+}
+
+.navbar {
+  background-color: #000;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.app-name {
+  margin: 0;
+  color: #ff6600;
+  font-size: 1.5rem;
+}
+
+.content {
+  padding: 1rem;
+}
+
+.row-section {
+  margin-bottom: 2rem;
+}
+
+.row-title {
+  margin: 0 0 0.5rem;
+  color: #ff6600;
+}
+
+.poster-row {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 0.5rem;
+}
+
+.poster {
+  position: relative;
+  flex: 0 0 auto;
+  width: 150px;
+  scroll-snap-align: start;
+  text-decoration: none;
+  color: #fff;
+}
+
+.poster img {
+  width: 100%;
+  height: auto;
+  border-radius: 0.3rem;
+  display: block;
+}
+
+.poster-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.3rem;
+  background: rgba(0,0,0,0.7);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+.title-detail h1 {
+  margin-top: 0;
+  color: #ff6600;
+}
+
+.actions {
+  margin-bottom: 1rem;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #ff6600;
+  color: #000;
+  border: none;
+  border-radius: 0.3rem;
+  text-decoration: none;
+  margin-right: 0.5rem;
+}
+
+.providers {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.providers li a {
+  background-color: #333;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.3rem;
+  color: #fff;
+  text-decoration: none;
+}
+
+.in-library {
+  color: #0f0;
+  margin-bottom: 1rem;
+}

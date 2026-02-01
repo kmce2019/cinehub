@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  cinehub:
+    build: .
+    container_name: cinehub
+    environment:
+      - APP_PUBLIC_URL=${APP_PUBLIC_URL:-http://localhost:7860}
+      - JELLYFIN_LAN_URL=${JELLYFIN_LAN_URL:-http://localhost:8096}
+      - JELLYFIN_WAN_URL=${JELLYFIN_WAN_URL:-http://localhost:8096}
+      - JELLYFIN_API_KEY=${JELLYFIN_API_KEY}
+      - JELLYFIN_USER_ID=${JELLYFIN_USER_ID}
+      - JELLYSEERR_URL=${JELLYSEERR_URL:-http://localhost:5055}
+      - JELLYSEERR_API_KEY=${JELLYSEERR_API_KEY}
+      - JELLYSEERR_USER_ID=${JELLYSEERR_USER_ID:-}
+      - TMDB_API_KEY=${TMDB_API_KEY}
+      - TMDB_REGION=${TMDB_REGION:-US}
+      - TMDB_LANGUAGE=${TMDB_LANGUAGE:-en-US}
+      - YOUTUBE_DATA_API_KEY=${YOUTUBE_DATA_API_KEY:-}
+    ports:
+      - "7860:7860"
+    volumes:
+      - cinehub-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  cinehub-data:

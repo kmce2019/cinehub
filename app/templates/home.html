@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% for row in rows %}
+    <section class="row-section">
+      <h2 class="row-title">{{ row.title }}</h2>
+      <div class="poster-row">
+        {% for item in row.items %}
+          {% if row.kind == 'jellyfin' %}
+            {% set item_id = item.get('Id') %}
+            {% set title = item.get('Name') %}
+            {% set image_tag = item.get('ImageTags', {}).get('Primary') %}
+            {% set img_url = jellyfin_url + '/Items/' + item_id + '/Images/Primary?tag=' + image_tag + '&quality=80' %}
+            <a class="poster" href="/title/jellyfin/{{ item_id }}">
+              <img src="{{ img_url }}" alt="{{ title }}">
+              <div class="poster-label">{{ title }}</div>
+            </a>
+          {% else %}
+            {% set tmdb_id = item.get('id') %}
+            {% set media_type = item.get('media_type') or ('tv' if item.get('name') else 'movie') %}
+            {% set title = item.get('title') or item.get('name') %}
+            {% set poster_path = item.get('poster_path') %}
+            {% set img_url = 'https://image.tmdb.org/t/p/w342' + poster_path if poster_path else '' %}
+            <a class="poster" href="/title/tmdb/{{ tmdb_id }}?media_type={{ media_type }}">
+              {% if img_url %}
+                <img src="{{ img_url }}" alt="{{ title }}">
+              {% else %}
+                <div class="no-image">No Image</div>
+              {% endif %}
+              <div class="poster-label">{{ title }}</div>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+{% endblock %}

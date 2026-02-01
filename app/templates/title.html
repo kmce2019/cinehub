@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <article class="title-detail">
+    <h1>{{ item.Name if kind == 'jellyfin' else (item.title or item.name) }}</h1>
+    {% if kind == 'jellyfin' %}
+      <div class="actions">
+        <a class="button" href="{{ play_url }}" target="_blank" rel="noopener">▶ Play in Jellyfin</a>
+        {% if devices %}
+          <form method="post" action="/send-to-device">
+            <input type="hidden" name="item_id" value="{{ item.Id }}">
+            <label for="device">Send to device:</label>
+            <select name="session_id">
+              {% for d in devices %}
+                <option value="{{ d.id }}">{{ d.device_name }} ({{ d.client }})</option>
+              {% endfor %}
+            </select>
+            <button type="submit">Send</button>
+          </form>
+        {% endif %}
+      </div>
+    {% else %}
+      {% if in_library %}
+        <p class="in-library">✅ Already in your library.</p>
+      {% else %}
+        <form method="post" action="/request">
+          <input type="hidden" name="media_type" value="{{ media_type }}">
+          <input type="hidden" name="tmdb_id" value="{{ item.id }}">
+          <button type="submit">Request via Jellyseerr</button>
+        </form>
+      {% endif %}
+      {% if providers %}
+        <h2>Watch on</h2>
+        <ul class="providers">
+          {% for name, url in provider_links.items() %}
+            <li><a href="{{ url }}" target="_blank" rel="noopener">{{ name|title }}</a></li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endif %}
+
+    <h3>Rate this</h3>
+    <form method="post" action="/rate">
+      <input type="hidden" name="source" value="{{ 'jellyfin' if kind == 'jellyfin' else 'tmdb' }}">
+      <input type="hidden" name="key" value="{{ item.Id if kind == 'jellyfin' else media_type ~ ':' ~ item.id }}">
+      <select name="stars">
+        {% for s in [1,2,3,4,5] %}
+          <option value="{{ s }}" {% if rating == s %}selected{% endif %}>{{ s }} ★</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Save</button>
+    </form>
+  </article>
+{% endblock %}
